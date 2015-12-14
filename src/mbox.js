@@ -37,11 +37,12 @@ THE SOFTWARE.
             this.open('confirm', message);
 
             $('.mbox-wrapper .mbox-ok-button').click(function() {
-                cb && cb();
+                cb && cb(true);
                 mbox.close();
             });
 
             $('.mbox-wrapper .mbox-cancel-button').click(function() {
+                cb && cb(false);
                 mbox.close();
             });
         },
