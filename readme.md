@@ -4,6 +4,12 @@ Mbox is a quick, simple, lightweight solution to creating Alert, Confirmation, P
 
 Mbox is not a DOM terrorist. Whatever windows and wrappers it creates, it removes them once they are done being used. Mbox isolates itself in a self-executing function, with `jQuery` as its parameter, so even if you don't use `$`, it will still work fine.
 
+#### CDN
+```html
+<link href="//cdn.bri.io/mbox/dist/mbox-0.0.1.min.css" rel="stylesheet">
+<script src="//cdn.bri.io/mbox/dist/mbox-0.0.1.min.js"></script>
+```
+
 #### Dependencies
 - [MaterializeCSS](https://github.com/dogfalo/materialize)
 - jQuery 1.7.2+
