@@ -54,7 +54,7 @@ THE SOFTWARE.
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1040;
+    z-index: 10000;
     outline: 0;
     background: rgba(255, 255, 255, .5);
 }
