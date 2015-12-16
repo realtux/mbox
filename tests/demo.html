@@ -11,10 +11,69 @@
 </head>
 <body>
 <div>
-    <button onclick="mbox.alert('alert')">Alert</button>
-    <button onclick="mbox.confirm('confirm')">Confirm</button>
-    <button onclick="mbox.prompt('prompt')">Prompt</button>
-    <br />
+    <script>
+        //mbox.prompt('Are you awesome?', function(answer) {
+        //    console.log(answer);
+        //
+        //    if (answer === 'yes') {
+        //        mbox.alert('you are awesome indeed');
+        //    } else {
+        //        mbox.alert('you are not awesome, according to you');
+        //    }
+        //});
+
+        //mbox.custom({
+        //    message: 'What is your favorite type of pie?',
+        //    buttons: [
+        //        {
+        //            label: 'Pumpkin',
+        //            color: 'orange darken-2',
+        //            callback: function() {
+        //                mbox.alert('Pumpkin is your favorite');
+        //            }
+        //        },
+        //        {
+        //            label: 'Apple',
+        //            color: 'red darken-2',
+        //            callback: function() {
+        //                mbox.alert('Apple is your favorite');
+        //            }
+        //        }
+        //    ]
+        //});
+
+        //mbox.custom({
+        //    message: 'Do you work?',
+        //    buttons: [
+        //        {
+        //            label: 'Yes',
+        //            color: 'green darken-2',
+        //            callback: function() {
+        //                console.log('do action for yes answer');
+        //                mbox.close();
+        //            }
+        //        },
+        //        {
+        //            label: 'No',
+        //            color: 'grey darken-2',
+        //            callback: function() {
+        //                console.log('do action for no answer');
+        //                mbox.close();
+        //            }
+        //        },
+        //        {
+        //            label: 'Not Answering',
+        //            color: 'red darken-2',
+        //            callback: function() {
+        //
+        //            }
+        //        }
+        //    ]
+        //});
+    </script>
+    <button onclick="mbox.alert('This is an alert')">Alert</button>
+    <button onclick="mbox.confirm('Are you awesome?')">Confirm</button>
+    <button onclick="mbox.prompt('What is your age?')">Prompt</button>
 </div>
 </body>
 </html>
