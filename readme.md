@@ -50,16 +50,16 @@ mbox.custom({
             label: 'Pumpkin',
             color: 'orange darken-2',
             callback: function() {
-                mbox.alert('Pumpkin is your favorite');
+                mbox.alert('Pumpkin is your favorite')
             }
         },
         {
             label: 'Apple',
             color: 'red darken-2',
             callback: function() {
-                mbox.alert('Apple is your favorite');
+                mbox.alert('Apple is your favorite')
             }
         }
     ]
-});
+})
 ```
