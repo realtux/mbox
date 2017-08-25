@@ -63,3 +63,21 @@ mbox.custom({
     ]
 })
 ```
+
+__Locales__
+By default mbox comes with the english locale.
+
+To add a new locale you need to provde the name of the locale and the translations for the OK and CANCEL button like this
+```js
+///Add locale for portuguese
+mbox.addLocale('pt',{
+    OK:'Está bem',
+    CANCEL:'cancelar'
+});
+```
+To set a locale from the available locales just call mbox.setLocale with the name of the locale as argument like this
+
+```js
+//Set portuguese locale
+mbox.setLocale('pt');
+``` 
