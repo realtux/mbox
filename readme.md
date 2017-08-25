@@ -65,6 +65,7 @@ mbox.custom({
 ```
 
 __Locales__
+
 By default mbox comes with the english locale.
 
 To add a new locale you need to provde the name of the locale and the translations for the OK and CANCEL button like this
