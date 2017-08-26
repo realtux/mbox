@@ -124,8 +124,7 @@ THE SOFTWARE.
                 .append(template)
                 .addClass('mbox-open');
 
-            i = 0;
-            options.buttons.forEach(function(button) {
+            options.buttons.forEach(function(button,i) {
                 var serialized_button = 'mbox-custom-button-' + i;
 
                 $('.' + serialized_button).click(function() {
@@ -136,7 +135,6 @@ THE SOFTWARE.
                     }
                 });
 
-                ++i;
             });
 
             // show the box
