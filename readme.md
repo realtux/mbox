@@ -21,7 +21,7 @@ __Alert__
 /**
  * signature: mbox.alert(message[, options[, callback]])
  * message: the message to show the users
- * options[optional]: an object of options (see mbox.custom for options and defaults)
+ * options[optional]: an object of options (see Options below for options and defaults)
  * callback[optional]: a function to execute after the user clicks 'Ok'
  */
 
@@ -34,7 +34,7 @@ __Confirm__
 /**
  * signature: mbox.confirm(message[, options[, callback]])
  * message: the message to show the users
- * options[optional]: an object of options (see mbox.custom for options and defaults)
+ * options[optional]: an object of options (see Options below for options and defaults)
  * callback[optional]: a function to execute after the user clicks 'Ok'
  */
 
@@ -51,7 +51,7 @@ __Prompt__
 /**
  * signature: mbox.prompt(message[, options[, callback]])
  * message: the message to show the users
- * options[optional]: an object of options (see mbox.custom for options and defaults)
+ * options[optional]: an object of options (see Options below for options and defaults)
  * callback[optional]: a function to execute after the user clicks 'Ok'
  */
 
@@ -73,7 +73,7 @@ __Custom__
  */
 mbox.custom({
     message: 'What is your favorite type of pie?',
-    options: {},
+    options: {}, // see Options below for options and defaults
     buttons: [
         {
             label: 'Pumpkin',
@@ -94,6 +94,7 @@ mbox.custom({
 ```
 
 __Options__
+
 Options can be set anywhere `options` appears in the method signature or globally like so:
 ```js
 // all options with defaults
