@@ -6,8 +6,8 @@ Mbox is not a DOM terrorist. Whatever windows and wrappers it creates, it remove
 
 #### CDN
 ```html
-<link href="//cdn.bri.io/mbox/dist/mbox-0.0.1.min.css" rel="stylesheet">
-<script src="//cdn.bri.io/mbox/dist/mbox-0.0.1.min.js"></script>
+<link href="//cdn.bri.io/mbox/dist/mbox-0.0.2.min.css" rel="stylesheet">
+<script src="//cdn.bri.io/mbox/dist/mbox-0.0.2.min.js"></script>
 ```
 
 #### Dependencies
