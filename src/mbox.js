@@ -29,40 +29,44 @@ THE SOFTWARE.
             OK: 'OK'
         },
         el: {
-            CANCEL:'Ακύρωση',
-            OK:'Εντάξει'
+            CANCEL: 'Ακύρωση',
+            OK: 'Εντάξει'
         },
         it: {
-            CANCEL  : "Annulla",
-            OK      : "OK"
+            CANCEL: "Annulla",
+            OK: "OK"
         },
-        de : {
-            CANCEL  : "Abbrechen",
-            OK : "OK"
+        de: {
+            CANCEL: "Abbrechen",
+            OK: "OK"
+        },
+        pt: {
+            OK: 'Está bem',
+            CANCEL: 'cancelar'
         }
-    }
+    };
 
     mbox = {
 
-        locale : 'en',
+        locale: 'en',
 
         template: '' +
             '<div class="mbox-wrapper">' +
-                '<div class="mbox z-depth-1">' +
-                    '<h5>$$$_message_$$$</h5>' +
-                    '$$$_input_$$$' +
-                    '<div class="right-align">' +
-                        '$$$_buttons_$$$' +
-                    '</div>' +
-                '</div>' +
+            '<div class="mbox z-depth-1">' +
+            '<h5>$$$_message_$$$</h5>' +
+            '$$$_input_$$$' +
+            '<div class="right-align">' +
+            '$$$_buttons_$$$' +
+            '</div>' +
+            '</div>' +
             '</div>',
 
-        set_locale: function(locale){
+        set_locale: function(locale) {
             this.locale = locale;
         },
         setLocale: this.set_locale,
 
-        add_locale: function(locale, translations){
+        add_locale: function(locale, translations) {
             locales[locale.toLowerCase()] = translations;
         },
         addLocale: this.add_locale,
@@ -142,7 +146,7 @@ THE SOFTWARE.
                 .append(template)
                 .addClass('mbox-open');
 
-            options.buttons.forEach(function(button,i) {
+            options.buttons.forEach(function(button, i) {
                 var serialized_button = 'mbox-custom-button-' + i;
 
                 $('.' + serialized_button).click(function() {

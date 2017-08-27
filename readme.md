@@ -66,7 +66,12 @@ mbox.custom({
 
 __Locales__
 
-By default mbox comes with the english locale.
+By default mbox comes with the the following locales:
+* English (en)
+* Greek (el)
+* Italian (it)
+* German (de)
+* Portoguese (pt)
 
 To add a new locale you need to provide the name of the locale and the translations for the OK and CANCEL button like this
 ```js
