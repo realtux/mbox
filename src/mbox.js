@@ -35,6 +35,10 @@ THE SOFTWARE.
         it: {
             CANCEL  : "Annulla",
             OK      : "OK"
+        },
+        de : {
+            CANCEL  : "Abbrechen",
+            OK : "OK"
         }
     }
 
