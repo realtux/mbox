@@ -27,6 +27,14 @@ THE SOFTWARE.
         en: {
             CANCEL: 'Cancel',
             OK: 'OK'
+        },
+        el: {
+            CANCEL:'Ακύρωση',
+            OK:'Εντάξει'
+        },
+        it: {
+            CANCEL  : "Annulla",
+            OK      : "OK"
         }
     }
 
