@@ -29,26 +29,32 @@ THE SOFTWARE.
             OK: 'OK'
         }
     }
+
     mbox = {
-        
+
+        locale : 'en',
+
         template: '' +
             '<div class="mbox-wrapper">' +
-            '<div class="mbox z-depth-1">' +
-            '<h5>$$$_message_$$$</h5>' +
-            '$$$_input_$$$' +
-            '<div class="right-align">' +
-            '$$$_buttons_$$$' +
-            '</div>' +
-            '</div>' +
+                '<div class="mbox z-depth-1">' +
+                    '<h5>$$$_message_$$$</h5>' +
+                    '$$$_input_$$$' +
+                    '<div class="right-align">' +
+                        '$$$_buttons_$$$' +
+                    '</div>' +
+                '</div>' +
             '</div>',
-        
-        locale : 'en',
-        setLocale : function(locale){
-            this.locale =locale;
+
+        set_locale: function(locale){
+            this.locale = locale;
         },
-        addLocale: function(locale,translations){
+        setLocale: this.set_locale,
+
+        add_locale: function(locale, translations){
             locales[locale.toLowerCase()] = translations;
         },
+        addLocale: this.add_locale,
+
         alert: function(message, cb) {
             this.open('alert', message);
 

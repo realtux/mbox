@@ -14,7 +14,7 @@ Mbox is not a DOM terrorist. Whatever windows and wrappers it creates, it remove
 - [MaterializeCSS](https://github.com/dogfalo/materialize)
 - jQuery 1.7.2+
 
-#### Basic Usage
+### Basic Usage
 
 __Alert__
 ```js
@@ -68,17 +68,21 @@ __Locales__
 
 By default mbox comes with the english locale.
 
-To add a new locale you need to provde the name of the locale and the translations for the OK and CANCEL button like this
+To add a new locale you need to provide the name of the locale and the translations for the OK and CANCEL button like this
 ```js
-///Add locale for portuguese
-mbox.addLocale('pt',{
-    OK:'Está bem',
-    CANCEL:'cancelar'
-});
+// Add locale for portuguese
+mbox.addLocale('pt', {
+    OK: 'Está bem',
+    CANCEL: 'cancelar'
+})
 ```
 To set a locale from the available locales just call mbox.setLocale with the name of the locale as argument like this
 
 ```js
-//Set portuguese locale
+// Set portuguese locale
 mbox.setLocale('pt');
-``` 
+```
+
+__Change Log__
+- 2017-08-27: 0.0.2: Locale support (@kounelios13)
+- 2015-12-13: 0.0.1: Initial
