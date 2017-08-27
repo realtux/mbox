@@ -21,20 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  ***/
-;(function($) {
+;
+(function($) {
+    var locales = {
+        en: {
+            CANCEL: 'Cancel',
+            OK: 'OK'
+        }
+    }
     mbox = {
-
+        
         template: '' +
             '<div class="mbox-wrapper">' +
-                '<div class="mbox z-depth-1">' +
-                    '<h5>$$$_message_$$$</h5>' +
-                    '$$$_input_$$$' +
-                    '<div class="right-align">' +
-                        '$$$_buttons_$$$' +
-                    '</div>' +
-                '</div>' +
+            '<div class="mbox z-depth-1">' +
+            '<h5>$$$_message_$$$</h5>' +
+            '$$$_input_$$$' +
+            '<div class="right-align">' +
+            '$$$_buttons_$$$' +
+            '</div>' +
+            '</div>' +
             '</div>',
-
+        
+        locale : 'en',
+        setLocale : function(locale){
+            this.locale =locale;
+        },
+        addLocale: function(locale,translations){
+            locales[locale.toLowerCase()] = translations;
+        },
         alert: function(message, cb) {
             this.open('alert', message);
 
@@ -110,8 +124,7 @@ THE SOFTWARE.
                 .append(template)
                 .addClass('mbox-open');
 
-            i = 0;
-            options.buttons.forEach(function(button) {
+            options.buttons.forEach(function(button,i) {
                 var serialized_button = 'mbox-custom-button-' + i;
 
                 $('.' + serialized_button).click(function() {
@@ -122,7 +135,6 @@ THE SOFTWARE.
                     }
                 });
 
-                ++i;
             });
 
             // show the box
@@ -136,19 +148,19 @@ THE SOFTWARE.
 
             switch (type) {
                 case 'alert':
-                    buttons = this.gen_button('light-blue darken-2', 'Ok', 'mbox-ok-button');
+                    buttons = this.gen_button('light-blue darken-2', locales[this.locale].OK, 'mbox-ok-button');
                     template = template.replace(/\$\$\$_input_\$\$\$/gi, '<hr />');
                     break;
 
                 case 'confirm':
-                    buttons = this.gen_button('light-blue darken-2', 'Ok', 'mbox-ok-button');
-                    buttons += this.gen_button('grey darken-2', 'Cancel', 'mbox-cancel-button');
+                    buttons = this.gen_button('light-blue darken-2', locales[this.locale].OK, 'mbox-ok-button');
+                    buttons += this.gen_button('grey darken-2', locales[this.locale].CANCEL, 'mbox-cancel-button');
                     template = template.replace(/\$\$\$_input_\$\$\$/gi, '<hr />');
                     break;
 
                 case 'prompt':
-                    buttons = this.gen_button('light-blue darken-2', 'Ok', 'mbox-ok-button');
-                    buttons += this.gen_button('grey darken-2', 'Cancel', 'mbox-cancel-button');
+                    buttons = this.gen_button('light-blue darken-2', locales[this.locale].OK, 'mbox-ok-button');
+                    buttons += this.gen_button('grey darken-2', locales[this.locale].CANCEL, 'mbox-cancel-button');
                     template = template.replace(/\$\$\$_input_\$\$\$/gi, input);
                     break;
             }
@@ -180,9 +192,9 @@ THE SOFTWARE.
         },
 
         gen_button: function(color, text, type) {
-            return '&nbsp;<button '+
-                'type="button" '+
-                'class="mbox-button ' + type + ' '+
+            return '&nbsp;<button ' +
+                'type="button" ' +
+                'class="mbox-button ' + type + ' ' +
                 'waves-effect waves-light btn ' + color + '">' + text +
                 '</button>';
         }
