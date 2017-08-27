@@ -18,11 +18,27 @@ Mbox is not a DOM terrorist. Whatever windows and wrappers it creates, it remove
 
 __Alert__
 ```js
+/**
+ * signature: mbox.alert(message[, options[, callback]])
+ * message: the message to show the users
+ * options[optional]: an object of options (see mbox.custom for options and defaults)
+ * callback[optional]: a function to execute after the user clicks 'Ok'
+ */
+
+// minimal usage
 mbox.alert('Oh noes! You cannot do that right now!')
 ```
 
 __Confirm__
 ```js
+/**
+ * signature: mbox.confirm(message[, options[, callback]])
+ * message: the message to show the users
+ * options[optional]: an object of options (see mbox.custom for options and defaults)
+ * callback[optional]: a function to execute after the user clicks 'Ok'
+ */
+
+// minimal usage
 mbox.confirm('Drugs are bad, are you sure you want to use them?', function(yes) {
     if (yes) {
         console.log('You took the drugs :(')
@@ -32,6 +48,14 @@ mbox.confirm('Drugs are bad, are you sure you want to use them?', function(yes) 
 
 __Prompt__
 ```js
+/**
+ * signature: mbox.prompt(message[, options[, callback]])
+ * message: the message to show the users
+ * options[optional]: an object of options (see mbox.custom for options and defaults)
+ * callback[optional]: a function to execute after the user clicks 'Ok'
+ */
+
+// minimal usage
 mbox.prompt('Did you star Mbox yet? (yes/no)', function(answer) {
     if (answer === 'yes') {
         console.log('Rock on...')
@@ -43,8 +67,13 @@ mbox.prompt('Did you star Mbox yet? (yes/no)', function(answer) {
 
 __Custom__
 ```js
+/**
+ * signature: mbox.custom(configuration)
+ * configuration: all options to configure a custom mbox modal
+ */
 mbox.custom({
     message: 'What is your favorite type of pie?',
+    options: {},
     buttons: [
         {
             label: 'Pumpkin',
@@ -64,6 +93,14 @@ mbox.custom({
 })
 ```
 
+__Options__
+Options can be set anywhere `options` appears in the method signature or globally like so:
+```js
+// all options with defaults
+mbox.global.options.open_speed = 0; // how fast the modal opens in milliseconds
+mbox.global.options.close_speed = 0; // how fast the modal closes in milliseconds
+```
+
 __Locales__
 
 By default mbox comes with the the following locales:
@@ -71,23 +108,22 @@ By default mbox comes with the the following locales:
 * Greek (el)
 * Italian (it)
 * German (de)
-* Portoguese (pt)
+* Portuguese (pt)
 
 To add a new locale you need to provide the name of the locale and the translations for the OK and CANCEL button like this
 ```js
-// Add locale for portuguese
 mbox.addLocale('pt', {
     OK: 'Está bem',
     CANCEL: 'cancelar'
 })
 ```
-To set a locale from the available locales just call mbox.setLocale with the name of the locale as argument like this
 
+To set a locale from the available locales just call mbox.setLocale with the name of the locale as argument like this
 ```js
-// Set portuguese locale
 mbox.setLocale('pt');
 ```
 
 __Change Log__
-- 2017-08-27: 0.0.2: Locale support (@kounelios13)
-- 2015-12-13: 0.0.1: Initial
+- 2017-08-27: 0.0.3: Configurable modal open/close speed (@ebrian)
+- 2017-08-26: 0.0.2: Locale support (@kounelios13)
+- 2015-12-13: 0.0.1: Initial (@ebrian)

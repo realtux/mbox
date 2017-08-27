@@ -50,15 +50,24 @@ THE SOFTWARE.
 
         locale: 'en',
 
+        global: {
+            options: {
+                open_speed: 0,
+                close_speed: 0
+            }
+        },
+
+        options: {},
+
         template: '' +
             '<div class="mbox-wrapper">' +
-            '<div class="mbox z-depth-1">' +
-            '<h5>$$$_message_$$$</h5>' +
-            '$$$_input_$$$' +
-            '<div class="right-align">' +
-            '$$$_buttons_$$$' +
-            '</div>' +
-            '</div>' +
+                '<div class="mbox z-depth-1">' +
+                    '<h5>$$$_message_$$$</h5>' +
+                    '$$$_input_$$$' +
+                    '<div class="right-align">' +
+                        '$$$_buttons_$$$' +
+                    '</div>' +
+                '</div>' +
             '</div>',
 
         set_locale: function(locale) {
@@ -71,7 +80,14 @@ THE SOFTWARE.
         },
         addLocale: this.add_locale,
 
-        alert: function(message, cb) {
+        alert: function() {
+            this.reset_options();
+
+            var data = this.parse_args(arguments);
+
+            var message = data.message;
+            var cb = data.cb;
+
             this.open('alert', message);
 
             $('.mbox-wrapper .mbox-ok-button').click(function() {
@@ -80,7 +96,14 @@ THE SOFTWARE.
             });
         },
 
-        confirm: function(message, cb) {
+        confirm: function() {
+            this.reset_options();
+
+            var data = this.parse_args(arguments);
+
+            var message = data.message;
+            var cb = data.cb;
+
             this.open('confirm', message);
 
             $('.mbox-wrapper .mbox-ok-button').click(function() {
@@ -94,7 +117,14 @@ THE SOFTWARE.
             });
         },
 
-        prompt: function(message, cb) {
+        prompt: function() {
+            this.reset_options();
+
+            var data = this.parse_args(arguments);
+
+            var message = data.message;
+            var cb = data.cb;
+
             this.open('prompt', message);
 
             $('.mbox-wrapper .mbox-ok-button').click(function() {
@@ -110,22 +140,25 @@ THE SOFTWARE.
             });
         },
 
-        custom: function(options) {
-            if (typeof options !== 'object') {
+        custom: function(configuration) {
+            this.reset_options();
+
+            if (typeof configuration !== 'object') {
                 throw 'Custom box requires argument 1 to be an object';
             }
+
+            typeof configuration.options === 'object' && this.process_options(configuration.options);
 
             var template = this.template;
             template = template.replace(/\$\$\$_input_\$\$\$/gi, '<hr />');
 
-            if (!options.buttons || options.buttons.length === 0) {
+            if (!configuration.buttons || configuration.buttons.length === 0) {
                 throw 'You must provide at least 1 button';
             }
 
             var buttons = '';
 
-            var i = 0;
-            options.buttons.forEach(function(button) {
+            configuration.buttons.forEach(function(button, i) {
                 var serialized_button = 'mbox-custom-button-' + i;
 
                 buttons += mbox
@@ -134,11 +167,9 @@ THE SOFTWARE.
                         button.label || '',
                         serialized_button
                     );
-
-                ++i;
             });
 
-            template = template.replace(/\$\$\$_message_\$\$\$/gi, options.message || '');
+            template = template.replace(/\$\$\$_message_\$\$\$/gi, configuration.message || '');
             template = template.replace(/\$\$\$_buttons_\$\$\$/gi, buttons);
 
             // prevent scrolling on the body
@@ -146,7 +177,7 @@ THE SOFTWARE.
                 .append(template)
                 .addClass('mbox-open');
 
-            options.buttons.forEach(function(button, i) {
+            configuration.buttons.forEach(function(button, i) {
                 var serialized_button = 'mbox-custom-button-' + i;
 
                 $('.' + serialized_button).click(function() {
@@ -160,7 +191,7 @@ THE SOFTWARE.
             });
 
             // show the box
-            $('.mbox-wrapper').show();
+            $('.mbox-wrapper').fadeIn(this.options.open_speed);
         },
 
         open: function(type, message) {
@@ -196,13 +227,13 @@ THE SOFTWARE.
                 .addClass('mbox-open');
 
             // show the box
-            $('.mbox-wrapper').show();
+            $('.mbox-wrapper').fadeIn(this.options.open_speed);
         },
 
         close: function() {
             // hide the box
             $('.mbox')
-                .hide(0, function() {
+                .fadeOut(this.options.close_speed, function() {
                     $(this).closest('.mbox-wrapper').remove();
                 });
 
@@ -211,6 +242,33 @@ THE SOFTWARE.
 
             // unbind all the mbox buttons
             $('.mbox-button').unbind('click');
+        },
+
+        parse_args: function(args) {
+            var args = [].slice.call(args);
+
+            var ret = {
+                message: null,
+                cb: null
+            }
+
+            args.forEach(function(arg) {
+                if (typeof arg === 'string') ret.message = arg;
+                if (typeof arg === 'function') ret.cb = arg;
+                if (typeof arg === 'object') this.process_options(arg);
+            }, this);
+
+            return ret;
+        },
+
+        process_options: function(options) {
+            Object.keys(options).forEach(function(key) {
+                this.options[key] = options[key];
+            }, this);
+        },
+
+        reset_options: function() {
+            this.process_options(this.global.options);
         },
 
         gen_button: function(color, text, type) {
