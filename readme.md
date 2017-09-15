@@ -125,6 +125,7 @@ mbox.set_locale('pt');
 ```
 
 __Change Log__
+- 2017-09-15: 0.0.4: Focus on primary button when modal opens ([@ebrian](https://github.com/ebrian))
 - 2017-08-27: 0.0.3: Configurable modal open/close speed ([@ebrian](https://github.com/ebrian))
 - 2017-08-26: 0.0.2: Locale support ([@kounelios13](https://github.com/kounelios13))
 - 2015-12-13: 0.0.1: Initial ([@ebrian](https://github.com/ebrian))

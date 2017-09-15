@@ -228,6 +228,9 @@ THE SOFTWARE.
 
             // show the box
             $('.mbox-wrapper').fadeIn(this.options.open_speed);
+
+            // focus the button
+            $('.mbox-wrapper .mbox-ok-button').focus();
         },
 
         close: function() {
