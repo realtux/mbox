@@ -1,5 +1,5 @@
 {
-  "name": "mbox-maker",
+  "name": "materialize-box",
   "version": "0.0.4",
   "dependencies": {
     "gulp": "3.9.1",
