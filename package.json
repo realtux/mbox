@@ -2,10 +2,7 @@
   "name": "materialize-box",
   "version": "0.0.4",
   "dependencies": {
-    "gulp": "3.9.1",
-    "gulp-clean-css": "3.7.0",
-    "gulp-uglify": "3.0.0",
-    "gulp-rename": "1.2.2"
+    
   },
   "scripts": {
     "minify": "gulp"
@@ -15,7 +12,12 @@
   "directories": {
     "test": "tests"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "gulp-clean-css": "3.7.0",
+    "gulp-uglify": "3.0.0",
+    "gulp-rename": "1.2.2"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ebrian/mbox.git"
