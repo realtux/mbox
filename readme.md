@@ -119,7 +119,7 @@ mbox.add_locale('pt', {
 })
 ```
 
-To set a locale from the available locales just call mbox.setLocale with the name of the locale as argument like this
+To set a locale from the available locales just call mbox.set_locale with the name of the locale as argument like this
 ```js
 mbox.set_locale('pt');
 ```
