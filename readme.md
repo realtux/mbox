@@ -125,6 +125,8 @@ mbox.set_locale('pt');
 ```
 
 __Change Log__
+- 2017-11-17: 0.0.4: Transfer dependencies to devDependencies ([@ismt](https://github.com/ismt))
+- 2017-11-16: 0.0.4: replaced mbox.setLocale with mbox.set_locale in docs ([@kounelios13](https://github.com/kounelios13))
 - 2017-09-15: 0.0.4: Focus on primary button when modal opens ([@ebrian](https://github.com/ebrian))
 - 2017-08-27: 0.0.3: Configurable modal open/close speed ([@ebrian](https://github.com/ebrian))
 - 2017-08-26: 0.0.2: Locale support ([@kounelios13](https://github.com/kounelios13))
