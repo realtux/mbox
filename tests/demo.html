@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Mbox - Materialize Box Maker</title>
+    <meta charset="utf-8">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css" rel="stylesheet" media="screen">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,500,700" rel="stylesheet">
     <link href="../src/mbox.css" rel="stylesheet">
@@ -9,76 +11,76 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
     <script src="../src/mbox.js"></script>
 </head>
+
 <body>
-<div>
-    <script>
-        //mbox.prompt('Are you awesome?', function(answer) {
-        //    console.log(answer);
-        //
-        //    if (answer === 'yes') {
-        //        mbox.alert('you are awesome indeed');
-        //    } else {
-        //        mbox.alert('you are not awesome, according to you');
-        //    }
-        //});
+    <div>
+        <script>
+            //mbox.prompt('Are you awesome?', function(answer) {
+            //    console.log(answer);
+            //
+            //    if (answer === 'yes') {
+            //        mbox.alert('you are awesome indeed');
+            //    } else {
+            //        mbox.alert('you are not awesome, according to you');
+            //    }
+            //});
 
-        //mbox.custom({
-        //    message: 'What is your favorite type of pie?',
-        //    buttons: [
-        //        {
-        //            label: 'Pumpkin',
-        //            color: 'orange darken-2',
-        //            callback: function() {
-        //                mbox.alert('Pumpkin is your favorite');
-        //            }
-        //        },
-        //        {
-        //            label: 'Apple',
-        //            color: 'red darken-2',
-        //            callback: function() {
-        //                mbox.alert('Apple is your favorite');
-        //            }
-        //        }
-        //    ]
-        //});
+            //mbox.custom({
+            //    message: 'What is your favorite type of pie?',
+            //    buttons: [
+            //        {
+            //            label: 'Pumpkin',
+            //            color: 'orange darken-2',
+            //            callback: function() {
+            //                mbox.alert('Pumpkin is your favorite');
+            //            }
+            //        },
+            //        {
+            //            label: 'Apple',
+            //            color: 'red darken-2',
+            //            callback: function() {
+            //                mbox.alert('Apple is your favorite');
+            //            }
+            //        }
+            //    ]
+            //});
+            mbox.set_open_speed(1000);
+            mbox.set_close_speed(1000);
+            mbox.custom({
+                message: 'Do you work?',
+                options: {
+                    close_speed: 100
+                },
+                buttons: [{
+                        label: 'Yes',
+                        color: 'green darken-2',
+                        callback: function () {
+                            console.log('do action for yes answer');
+                            mbox.close();
+                        }
+                    },
+                    {
+                        label: 'No',
+                        color: 'grey darken-2',
+                        callback: function () {
+                            console.log('do action for no answer');
+                            mbox.close();
+                        }
+                    },
+                    {
+                        label: 'Not Answering',
+                        color: 'red darken-2',
+                        callback: function () {
 
-        mbox.custom({
-           message: 'Do you work?',
-           options: {
-               close_speed: 100
-           },
-           buttons: [
-               {
-                   label: 'Yes',
-                   color: 'green darken-2',
-                   callback: function() {
-                       console.log('do action for yes answer');
-                       mbox.close();
-                   }
-               },
-               {
-                   label: 'No',
-                   color: 'grey darken-2',
-                   callback: function() {
-                       console.log('do action for no answer');
-                       mbox.close();
-                   }
-               },
-               {
-                   label: 'Not Answering',
-                   color: 'red darken-2',
-                   callback: function() {
-
-                   }
-               }
-           ]
-        });
-        mbox.global.options.open_speed = 1000;
-        mbox.global.options.close_speed = 1000;
-    </script>
-    <button onclick="mbox.alert('This is an alert', {open_speed: 0})">Alert</button>
-    <button onclick="mbox.confirm('Are you awesome?', {close_speed: 2000}, function() {})">Confirm</button>
-    <button onclick="mbox.prompt({open_speed: 0, close_speed: 0}, 'What is your age?')">Prompt</button>
-</div>
+                        }
+                    }
+                ]
+            });
+        </script>
+        <button onclick="mbox.alert('This is an alert', {open_speed: 0})">Alert</button>
+        <button onclick="mbox.confirm('Are you awesome?', {close_speed: 2000}, function() {})">Confirm</button>
+        <button onclick="mbox.prompt({open_speed: 0, close_speed: 0}, 'What is your age?')">Prompt</button>
+    </div>
 </body>
+
 </html>

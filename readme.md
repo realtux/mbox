@@ -95,11 +95,22 @@ mbox.custom({
 
 __Options__
 
+# For versions prior  0.0.5
 Options can be set anywhere `options` appears in the method signature or globally like so:
 ```js
 // all options with defaults
 mbox.global.options.open_speed = 0; // how fast the modal opens in milliseconds
 mbox.global.options.close_speed = 0; // how fast the modal closes in milliseconds
+```
+# For versions >= 0.0.5
+
+From version >=0.0.5 `mbox` uses the revealing module pattern so in order
+to set global `close_speed` and `open_speed` you need to use the following methods:
+```
+mbox.set_open_speed(speed);
+mbox.set_close_speed(speed); 
+(where speed is a number)
+
 ```
 
 __Locales__
@@ -125,6 +136,7 @@ mbox.set_locale('pt');
 ```
 
 __Change Log__
+- 2018-02-07: 0.0.5: mbox now uses the revealing module pattern to avoid exposing private api ([kounelios13])
 - 2017-11-17: 0.0.4: Transfer dependencies to devDependencies ([@ismt](https://github.com/ismt))
 - 2017-11-16: 0.0.4: replaced mbox.setLocale with mbox.set_locale in docs ([@kounelios13](https://github.com/kounelios13))
 - 2017-09-15: 0.0.4: Focus on primary button when modal opens ([@ebrian](https://github.com/ebrian))
