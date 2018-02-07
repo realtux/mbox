@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>Mbox - Materialize Box Maker</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css" rel="stylesheet" media="screen">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="./dist/mbox-0.0.5.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
     <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
@@ -16,43 +18,67 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
 
     <script src="./src/index.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
     <style>
-        p{
-            text-align:justify ;
+        p {
+            text-align: justify;
             max-width: 70pc;
         }
     </style>
 </head>
+
 <body>
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo center">mbox</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li>
-                    <a href="#installation">Installation</a>
-                </li>
-                <li>
-                    <a href="#requirements">Requirements</a>
-                </li>
-                <li>
-                    <a href="#examples">Examples</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper red darken-2">
+                <a href="#" class="brand-logo center">mbox</a>
+                <a href="#" class="button-collapse" data-activates="side-nav">
+                    <i class="material-icons">menu</i>
+                </a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li>
+                        <a href="#installation">Installation</a>
+                    </li>
+                    <li>
+                        <a href="#requirements">Requirements</a>
+                    </li>
+                    <li>
+                        <a href="#usage">Usage</a>
+                    </li>
+                    <li>
+                        <a href="#examples">Examples</a>
+                    </li>
+                </ul>
+                <ul id="side-nav" class="side-nav">
+                    <li>
+                        <a href="#installation">Installation</a>
+                    </li>
+                    <li>
+                        <a href="#requirements">Requirements</a>
+                    </li>
+                    <li>
+                        <a href="#usage">Usage</a>
+                    </li>
+                    <li>
+                        <a href="#examples">Examples</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
     <div class="container">
         <h1 class='blue-text'>Mbox-Materialize Box Maker</h1>
-        <p>Mbox is a quick,simple lightweight solution to creating Alert,Confirmation,Prompt and Custom dialogs.
-        Inspired by many ways by <a href="#">bootbox.js for Bootstrap</a>,Mbox is designed to work in the same way but with <a href="#">MaterializeCSS</a> as its frontend framework.    
-        Mbox is not a DOM terorist.Whatever windows and wrappers it creates ,it removes them once they are done being used.
-        </p>    
+        <p>Mbox is a quick,simple lightweight solution to creating Alert,Confirmation,Prompt and Custom dialogs. Inspired by
+            many ways by
+            <a href="https://github.com/makeusabrew/bootbox">bootbox.js for Bootstrap</a>,Mbox is designed to work in the same way but with
+            <a href="https://github.com/dogfalo/materialize">MaterializeCSS</a> as its frontend framework. Mbox is not a DOM terorist.Whatever windows and wrappers it creates
+            ,it removes them once they are done being used.
+        </p>
         <section id="installation">
             <h2 class='blue-text'>Installation</h2>
             <h3 class='green-text'>CDN</h3>
             <code class='html'>
-
-                <div >
+                <div>
                     &lt;link rel='stylesheet' href ='//cdn.bri.io/mbox/dist/mbox-0.0.5.min.css'&gt;
                 </div>
                 <div class='html'>
@@ -74,4 +100,5 @@
         </section>
     </div>
 </body>
+
 </html>
