@@ -1,11 +1,9 @@
 {
   "name": "materialize-box",
   "version": "0.0.4",
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "scripts": {
-    "minify": "gulp"
+    "update-versions": "gulp"
   },
   "description": "Mbox is a quick, simple, lightweight solution to creating Alert, Confirmation, Prompt, and Custom dialogs. Inspired in many ways by [bootbox.js for Bootstrap](https://github.com/makeusabrew/bootbox), Mbox is designed to work in the same way, but with [MaterializeCSS](https://github.com/dogfalo/materialize) as its frontend framework.",
   "main": "src/mbox.js",
@@ -15,9 +13,10 @@
   "devDependencies": {
     "gulp": "3.9.1",
     "gulp-clean-css": "3.7.0",
-    "gulp-uglify": "3.0.0",
-    "gulp-rename": "1.2.2"
-},
+    "gulp-html-replace": "^1.6.2",
+    "gulp-rename": "1.2.2",
+    "gulp-uglify": "3.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ebrian/mbox.git"
