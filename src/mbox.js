@@ -154,7 +154,6 @@ var mbox = (function ($) {
         },
 
         custom: function (configuration) {
-            console.log(this)
             core.reset_options();
 
             if (typeof configuration !== 'object') {
