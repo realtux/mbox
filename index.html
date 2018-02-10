@@ -9,11 +9,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css" rel="stylesheet" media="screen">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,500,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="http://cdn.bri.io/mbox/dist/mbox-10.0.5.min.css">
+    <link rel="stylesheet" href="https://cdn.bri.io/mbox/dist/mbox-10.0.5.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
     <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
-    <script src="http://cdn.bri.io/mbox/dist/mbox-10.0.5.min.js"></script>
+    <script src="https://cdn.bri.io/mbox/dist/mbox-10.0.5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
 
@@ -111,6 +111,120 @@
             mbox.alert('Oh noes! You cannot do that right now!');
                 </code>
             </pre>
+            <h3>Confirm</h3>
+            <pre>
+                <code class="language-javascript">
+/**
+ * signature: mbox.confirm(message[, options[, callback]])
+ * message: the message to show the users
+ * options[optional]: an object of options (see Options below for options and defaults)
+ * callback[optional]: a function to execute after the user clicks 'Ok'
+ */
+
+// minimal usage
+mbox.confirm('Drugs are bad, are you sure you want to use them?', function(yes) {
+    if (yes) {
+        console.log('You took the drugs :(')
+    }
+});
+                </code>
+            </pre>
+            <h3>Prompt</h3>
+            <pre>
+                <code class="language-javascript">
+/**
+ * signature: mbox.prompt(message[, options[, callback]])
+ * message: the message to show the users
+ * options[optional]: an object of options (see Options below for options and defaults)
+ * callback[optional]: a function to execute after the user clicks 'Ok'
+ */
+
+// minimal usage
+mbox.prompt('Did you star Mbox yet? (yes/no)', function(answer) {
+    if (answer === 'yes') {
+        console.log('Rock on...')
+    } else {
+        console.log('Shame')
+    }
+});
+                </code>
+            </pre>
+            <h3>Custom</h3>
+            <pre>
+                <code class="language-javascript">
+/**
+ * signature: mbox.custom(configuration)
+ * configuration: all options to configure a custom mbox modal
+ */
+mbox.custom({
+    message: 'What is your favorite type of pie?',
+    options: {}, // see Options below for options and defaults
+    buttons: [
+        {
+            label: 'Pumpkin',
+            color: 'orange darken-2',
+            callback: function() {
+                mbox.alert('Pumpkin is your favorite')
+            }
+        },
+        {
+            label: 'Apple',
+            color: 'red darken-2',
+            callback: function() {
+                mbox.alert('Apple is your favorite')
+            }
+        }
+    ]
+});                    
+                </code>
+            </pre>
+            <h3>Options</h3>
+            <p>Options can be set anywhere <code>options</code> appears in the method signature.Current supported options are:</p>
+            <ul class="collection">
+                <li class="collection-item"> open_speed(Determines how fast mbox modals open) </li>
+                <li class="collection-item"> close_speed(Determines how fast mbox modals close) </li>
+            </ul>
+            <p>You can also set these options globally like this:</p>
+            <pre>
+                <code class="javascript">
+//versions < 0.0.5
+mbox.global.options.open_speed = 1000;
+mbox.globale.options.close_speed =1000;
+//versions >= 0.0.5
+mbox.set_open_speed(1000);
+mbox.set_close_speed(1000);
+                </code>
+            </pre>
+            <h3>Locales</h3>
+            <p>By default mbox comes with the following locales:
+                <ul class="collection">
+                    <li class="collection-item">
+                        English (en)
+                    </li>
+                    <li class="collection-item">
+                        Greek (el)
+                    </li>
+                    <li class="collection-item">
+                        Italian (it)
+                    </li>
+                    <li class="collection-item">
+                        German (de)
+                    </li>
+                    <li class="collection-item">
+                        Portuguese (pt)
+                    </li>
+                </ul>
+                To add a new locale you need to provide the name of the locale and the translations for the OK and CANCEL button like this
+                <pre>
+                    <code class="language-javascript">
+                        mbox.add_locale('pt', {
+                            OK: 'Está bem',
+                            CANCEL: 'cancelar'
+                        });
+                    </code>
+                </pre>
+                
+            </p>
         </section>
         <section id="examples">
     

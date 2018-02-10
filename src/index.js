@@ -5,7 +5,7 @@
 hljs.initHighlightingOnLoad();
 $(document).ready(function () {
     $(".button-collapse").sideNav();
-    $("code").each(function (_,block) {
+    $("code:not(p code)").each(function (_,block) {
         hljs.highlightBlock(block);
     })
     $("#alert").click(function () {
