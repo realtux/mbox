@@ -47,12 +47,13 @@ var mbox = (function ($) {
         }
     };
     var core = {
-        locale: 'en',
+        
 
         global: {
             options: {
                 open_speed: 0,
-                close_speed: 0
+                close_speed: 0,
+                locale:'en'
             }
         },
 
@@ -73,16 +74,16 @@ var mbox = (function ($) {
         },
         template: '' +
             '<div class="mbox-wrapper">' +
-            '<div class="mbox z-depth-1">' +
-            '<h5>$$$_message_$$$</h5>' +
-            '$$$_input_$$$' +
-            '<div class="right-align">' +
-            '$$$_buttons_$$$' +
-            '</div>' +
-            '</div>' +
+                '<div class="mbox z-depth-1">' +
+                    '<h5>$$$_message_$$$</h5>' +
+                    '$$$_input_$$$' +
+                    '<div class="right-align">' +
+                        '$$$_buttons_$$$' +
+                    '</div>' +
+                '</div>' +
             '</div>',
         set_locale: function (locale) {
-            core.locale = locale;
+            core.global.options.locale = locale;
         },
         setLocale: this.set_locale,
 
@@ -211,22 +212,29 @@ var mbox = (function ($) {
             var template = core.template;
             var input = '<input type="text" />';
             var buttons;
-
+            var locale_name = null;
+            if (core.options.locale) {
+                //User requested a specific locale
+                locale_name = core.options.locale;
+            } else {
+                locale_name = core.global.options.locale;
+            }
+            var locale = locales[locale_name];
             switch (type) {
                 case 'alert':
-                    buttons = core.gen_button('light-blue darken-2', locales[this.locale].OK, 'mbox-ok-button');
+                    buttons = core.gen_button('light-blue darken-2', locale.OK, 'mbox-ok-button');
                     template = template.replace(/\$\$\$_input_\$\$\$/gi, '<hr />');
                     break;
 
                 case 'confirm':
-                    buttons = core.gen_button('light-blue darken-2', locales[this.locale].OK, 'mbox-ok-button');
-                    buttons += core.gen_button('grey darken-2', locales[this.locale].CANCEL, 'mbox-cancel-button');
+                    buttons = core.gen_button('light-blue darken-2', locale.OK, 'mbox-ok-button');
+                    buttons += core.gen_button('grey darken-2', locale.CANCEL, 'mbox-cancel-button');
                     template = template.replace(/\$\$\$_input_\$\$\$/gi, '<hr />');
                     break;
 
                 case 'prompt':
-                    buttons = core.gen_button('light-blue darken-2', locales[this.locale].OK, 'mbox-ok-button');
-                    buttons += core.gen_button('grey darken-2', locales[this.locale].CANCEL, 'mbox-cancel-button');
+                    buttons = core.gen_button('light-blue darken-2', locale.OK, 'mbox-ok-button');
+                    buttons += core.gen_button('grey darken-2', locale.CANCEL, 'mbox-cancel-button');
                     template = template.replace(/\$\$\$_input_\$\$\$/gi, input);
                     break;
             }
