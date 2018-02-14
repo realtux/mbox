@@ -1,5 +1,8 @@
 ## Mbox - Materialize Box Maker
 
+# v1.0.0 is not stable 
+To build mbox minified version run `npm run minify` after installing `devDependencies` 
+
 Mbox is a quick, simple, lightweight solution to creating Alert, Confirmation, Prompt, and Custom dialogs. Inspired in many ways by [bootbox.js for Bootstrap](https://github.com/makeusabrew/bootbox), Mbox is designed to work in the same way, but with [MaterializeCSS](https://github.com/dogfalo/materialize) as its frontend framework.
 
 Mbox is not a DOM terrorist. Whatever windows and wrappers it creates, it removes them once they are done being used.
