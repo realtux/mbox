@@ -117,17 +117,19 @@ var mbox = (function ($) {
 
             var message = data.message;
             var cb = data.cb;
-
+            if (!cb) {
+                throw new Error('Confirm requires a callback');
+            }
             core.open('confirm', message);
 
             $('.mbox-wrapper .mbox-ok-button').click(function () {
                 core.close();
-                cb && cb(true);
+                cb(true);
             });
 
             $('.mbox-wrapper .mbox-cancel-button').click(function () {
                 core.close();
-                cb && cb(false);
+                cb(false);
             });
         },
 
@@ -138,7 +140,9 @@ var mbox = (function ($) {
 
             var message = data.message;
             var cb = data.cb;
-
+            if (!cb) {
+                throw new Error('Prompt requires a callback');
+            }
             core.open('prompt', message);
 
             $('.mbox-wrapper .mbox-ok-button').click(function () {
