@@ -149,12 +149,12 @@ var mbox = (function ($) {
                 var entered_text = $('.mbox-wrapper input').val();
 
                 core.close();
-                cb && cb(entered_text);
+                cb(entered_text);
             });
 
             $('.mbox-wrapper .mbox-cancel-button').click(function () {
                 core.close();
-                cb && cb(false);
+                cb(false);
             });
         },
 
