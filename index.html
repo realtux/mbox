@@ -10,20 +10,12 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,500,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.bri.io/mbox/dist/mbox-0.0.5.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <link rel="stylesheet" href="src/stylesheets/index.css">
     <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
     <script src="https://cdn.bri.io/mbox/dist/mbox-0.0.5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
+    <script src="./src/javascript/index.js"></script>
 
-    <script src="./src/index.js"></script>
-    <style>
-        p {
-            text-align: justify;
-            max-width: 70pc;
-        }
-    </style>
 </head>
 
 <body>
@@ -42,10 +34,10 @@
                         <a href="#requirements">Requirements</a>
                     </li>
                     <li>
-                        <a href="#usage">Usage</a>
+                        <a href="./pages/usage.html">Usage</a>
                     </li>
                     <li>
-                        <a href="#examples">Examples</a>
+                        <a href="./pages/examples.html">Examples</a>
                     </li>
                 </ul>
                 <ul id="side-nav" class="side-nav">
@@ -56,10 +48,10 @@
                         <a href="#requirements">Requirements</a>
                     </li>
                     <li>
-                        <a href="#usage">Usage</a>
+                        <a href="./pages/usage.html">Usage</a>
                     </li>
                     <li>
-                        <a href="#examples">Examples</a>
+                        <a href="./pages/examples.html">Examples</a>
                     </li>
                 </ul>
             </div>
@@ -67,13 +59,16 @@
     </div>
 
     <div class="container">
-        <h1 class='blue-text'>Mbox-Materialize Box Maker</h1>
-        <p>Mbox is a quick,simple lightweight solution to creating Alert,Confirmation,Prompt and Custom dialogs. Inspired by
-            many ways by
-            <a href="https://github.com/makeusabrew/bootbox">bootbox.js for Bootstrap</a>,Mbox is designed to work in the same way but with
-            <a href="https://github.com/dogfalo/materialize">MaterializeCSS</a> as its frontend framework. Mbox is not a DOM terorist.Whatever windows and wrappers it creates
-            ,it removes them once they are done being used.
-        </p>
+        <div class="card-panel grey lighten-2 center-align">
+
+            <h1 class='blue-text'>Mbox-Materialize Box Maker</h1>
+            <p>Mbox is a quick,simple lightweight solution to creating Alert,Confirmation,Prompt and Custom dialogs. Inspired
+                by many ways by
+                <a href="https://github.com/makeusabrew/bootbox">bootbox.js for Bootstrap</a>,Mbox is designed to work in the same way but with
+                <a href="https://github.com/dogfalo/materialize">MaterializeCSS</a> as its frontend framework. Mbox is not a DOM terorist.Whatever windows and wrappers it
+                creates ,it removes them once they are done being used.
+            </p>
+        </div>
         <section id="installation">
             <h2 class='blue-text'>Installation</h2>
             <h3 class='green-text'>CDN</h3>
@@ -94,140 +89,6 @@
                     <li class='collection-item'>jQuery 1.7.2+</li>
                 </ul>
             </p>
-        </section>
-        <section id="usage">
-            <h2 class="blue-text">Usage</h2>
-            <h3>Alert</h3>
-            <pre>
-                <code class='language-javascript'>
-            /**
-            * signature: mbox.alert(message[, options[, callback]])
-            * message: the message to show the users
-            * options[optional]: an object of options (see Options below for options and defaults)
-            * callback[optional]: a function to execute after the user clicks 'Ok'
-            */
-
-            // minimal usage
-            mbox.alert('Oh noes! You cannot do that right now!');
-                </code>
-            </pre>
-            <h3>Confirm</h3>
-            <pre>
-                <code class="language-javascript">
-/**
- * signature: mbox.confirm(message[, options[, callback]])
- * message: the message to show the users
- * options[optional]: an object of options (see Options below for options and defaults)
- * callback[optional]: a function to execute after the user clicks 'Ok'
- */
-
-// minimal usage
-mbox.confirm('Drugs are bad, are you sure you want to use them?', function(yes) {
-    if (yes) {
-        console.log('You took the drugs :(')
-    }
-});
-                </code>
-            </pre>
-            <h3>Prompt</h3>
-            <pre>
-                <code class="language-javascript">
-/**
- * signature: mbox.prompt(message[, options[, callback]])
- * message: the message to show the users
- * options[optional]: an object of options (see Options below for options and defaults)
- * callback[optional]: a function to execute after the user clicks 'Ok'
- */
-
-// minimal usage
-mbox.prompt('Did you star Mbox yet? (yes/no)', function(answer) {
-    if (answer === 'yes') {
-        console.log('Rock on...')
-    } else {
-        console.log('Shame')
-    }
-});
-                </code>
-            </pre>
-            <h3>Custom</h3>
-            <pre>
-                <code class="language-javascript">
-/**
- * signature: mbox.custom(configuration)
- * configuration: all options to configure a custom mbox modal
- */
-mbox.custom({
-    message: 'What is your favorite type of pie?',
-    options: {}, // see Options below for options and defaults
-    buttons: [
-        {
-            label: 'Pumpkin',
-            color: 'orange darken-2',
-            callback: function() {
-                mbox.alert('Pumpkin is your favorite')
-            }
-        },
-        {
-            label: 'Apple',
-            color: 'red darken-2',
-            callback: function() {
-                mbox.alert('Apple is your favorite')
-            }
-        }
-    ]
-});                    
-                </code>
-            </pre>
-            <h3>Options</h3>
-            <p>Options can be set anywhere <code>options</code> appears in the method signature.Current supported options are:</p>
-            <ul class="collection">
-                <li class="collection-item"> open_speed(Determines how fast mbox modals open) </li>
-                <li class="collection-item"> close_speed(Determines how fast mbox modals close) </li>
-            </ul>
-            <p>You can also set these options globally like this:</p>
-            <pre>
-                <code class="javascript">
-//versions < 0.0.5
-mbox.global.options.open_speed = 1000;
-mbox.globale.options.close_speed =1000;
-//versions >= 0.0.5
-mbox.set_open_speed(1000);
-mbox.set_close_speed(1000);
-                </code>
-            </pre>
-            <h3>Locales</h3>
-            <p>By default mbox comes with the following locales:
-                <ul class="collection">
-                    <li class="collection-item">
-                        English (en)
-                    </li>
-                    <li class="collection-item">
-                        Greek (el)
-                    </li>
-                    <li class="collection-item">
-                        Italian (it)
-                    </li>
-                    <li class="collection-item">
-                        German (de)
-                    </li>
-                    <li class="collection-item">
-                        Portuguese (pt)
-                    </li>
-                </ul>
-                To add a new locale you need to provide the name of the locale and the translations for the OK and CANCEL button like this
-                <pre>
-                    <code class="language-javascript">
-                        mbox.add_locale('pt', {
-                            OK: 'Está bem',
-                            CANCEL: 'cancelar'
-                        });
-                    </code>
-                </pre>
-                
-            </p>
-        </section>
-        <section id="examples">
-    
         </section>
     </div>
 </body>
