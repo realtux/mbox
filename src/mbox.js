@@ -72,8 +72,19 @@ var mbox = (function ($) {
             }
             core.global.options.open_speed = speed;
         },
-        template: '' +
-            '<div class="mbox-wrapper">' +
+        template:
+            '<div class="modal">' +
+                '<div class="z-depth-1">' +
+                    '<div class="modal-content">' +
+                        '<h5>$$$_message_$$$</h5>' + 
+                        '$$$_input_$$$' +
+                    '<div class="modal-footer">' + 
+                        '$$$_buttons_$$$'+
+                    '</div>'+ 
+                '</div>' 
+            +'</div>',    
+       /*  template: '' +
+            '<div class="mbox-wrapper modal">' +
                 '<div class="mbox z-depth-1">' +
                     '<h5>$$$_message_$$$</h5>' +
                     '$$$_input_$$$' +
@@ -81,7 +92,7 @@ var mbox = (function ($) {
                         '$$$_buttons_$$$' +
                     '</div>' +
                 '</div>' +
-            '</div>',
+            '</div>', */
         set_locale: function (locale) {
             core.global.options.locale = locale;
         },
@@ -209,6 +220,7 @@ var mbox = (function ($) {
         },
 
         open: function (type, message) {
+            console.log('opening')
             var template = core.template;
             var input = '<input type="text" />';
             var buttons;
@@ -243,24 +255,38 @@ var mbox = (function ($) {
             if (buttons) template = template.replace(/\$\$\$_buttons_\$\$\$/gi, buttons);
 
             // prevent scrolling on the body
-            $('body')
+            
+            /* $('body')
                 .append(template)
-                .addClass('mbox-open');
+                .addClass('mbox-open'); */
 
+            var template_element = document.createElement('div');
+            template_element.innerHTML = template;
+            document.body.append(template_element);
+            var modal_element = document.querySelector('.modal');
+            var options = core.options;
+            var modal_instance = M.Modal.init(modal_element, {
+                inDuration: options.open_speed,
+                outSpeed:options.close_speed
+            });
+            modal_instance.open();
             // show the box
-            $('.mbox-wrapper').fadeIn(this.options.open_speed);
+            //$('.mbox-wrapper').fadeIn(this.options.open_speed);
 
             // focus the button
-            $('.mbox-wrapper .mbox-ok-button').focus();
+            //$('.mbox-wrapper .mbox-ok-button').focus();
         },
 
         close: function () {
-            // hide the box
+            var modal_element = document.querySelector('.modal');
+            var modal_instance = M.Modal.getInstance(modal_element);
+            modal_instance.close();
+            /* // hide the box
             var close_speed = core.options.close_speed;
             $('.mbox')
                 .fadeOut(close_speed, function () {
                     $(this).closest('.mbox-wrapper').remove();
-                });
+                }); */
 
             // allow scrolling on body again
             $('body').removeClass('mbox-open');
