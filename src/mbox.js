@@ -23,6 +23,8 @@ THE SOFTWARE.
  ***/
 
 
+
+
 var mbox = (function ($) {
     var locales = {
         en: {
@@ -53,7 +55,8 @@ var mbox = (function ($) {
             options: {
                 open_speed: 0,
                 close_speed: 0,
-                locale:'en'
+                locale: 'en',
+                dismissible: false
             }
         },
 
@@ -72,16 +75,17 @@ var mbox = (function ($) {
             }
             core.global.options.open_speed = speed;
         },
-        template: '' +
-            '<div class="mbox-wrapper">' +
-                '<div class="mbox z-depth-1">' +
-                    '<h5>$$$_message_$$$</h5>' +
-                    '$$$_input_$$$' +
-                    '<div class="right-align">' +
-                        '$$$_buttons_$$$' +
-                    '</div>' +
-                '</div>' +
-            '</div>',
+        template:
+            '<div class="modal mbox-wrapper">' +
+                '<div class="z-depth-1">' +
+                    '<div class="modal-content">' +
+                        '<h5>$$$_message_$$$</h5>' + 
+                        '$$$_input_$$$' +
+                    '<div class="modal-footer">' + 
+                        '$$$_buttons_$$$'+
+                    '</div>'+ 
+                '</div>' 
+            +'</div>',    
         set_locale: function (locale) {
             core.global.options.locale = locale;
         },
@@ -191,10 +195,11 @@ var mbox = (function ($) {
             template = template.replace(/\$\$\$_buttons_\$\$\$/gi, buttons);
 
             // prevent scrolling on the body
-            $('body')
+            /* $('body')
                 .append(template)
-                .addClass('mbox-open');
-
+                .addClass('mbox-open') */;
+                
+            var open_speed = core.options.open_speed;
             configuration.buttons.forEach(function (button, i) {
                 var serialized_button = 'mbox-custom-button-' + i;
 
@@ -207,9 +212,18 @@ var mbox = (function ($) {
                 });
 
             });
-            var open_speed = core.options.open_speed;
+            var template_element = document.createElement('div');
+            template_element.innerHTML = template;
+            document.body.append(template_element);
+            var modal_element = document.querySelector('.modal');
+            var options = core.options;
+            var modal_instance = M.Modal.init(modal_element, {
+                inDuration: options.open_speed,
+                outDuration: options.close_speed
+            });
+            modal_instance.open();
             // show the box
-            $('.mbox-wrapper').fadeIn(open_speed);
+            /* $('.mbox-wrapper').fadeIn(open_speed); */
         },
 
         open: function (type, message) {
@@ -224,6 +238,7 @@ var mbox = (function ($) {
                 locale_name = core.global.options.locale;
             }
             var locale = locales[locale_name];
+            console.log(locale)
             switch (type) {
                 case 'alert':
                     buttons = core.gen_button('light-blue darken-2', locale.OK, 'mbox-ok-button');
@@ -246,30 +261,46 @@ var mbox = (function ($) {
             if (message) template = template.replace(/\$\$\$_message_\$\$\$/gi, message);
             if (buttons) template = template.replace(/\$\$\$_buttons_\$\$\$/gi, buttons);
 
-            // prevent scrolling on the body
-            $('body')
-                .append(template)
-                .addClass('mbox-open');
-
+            
+            var template_element = document.createElement('div');
+            template_element.innerHTML = template;
+            var options = core.options;
+            if (options.bottom_sheet) {
+                template_element.firstChild.classList.add("bottom-sheet");
+            }
+            if (options.fixed_footer) {
+                template_element.firstChild.classList.add("fixed-footer");
+            }
+            document.body.append(template_element);
+            //Since materializecss@1.0.0 we need to manually initialize modals
+            var modal_element = document.querySelector('.modal');
+            var modal_instance = M.Modal.init(modal_element, {
+                inDuration: options.open_speed,
+                outDuration: options.close_speed,
+                dismissible:options.dismissable || core.global.options.dismissable
+            });
             // show the box
-            $('.mbox-wrapper').fadeIn(this.options.open_speed);
-
+            modal_instance.open();
             // focus the button
-            $('.mbox-wrapper .mbox-ok-button').focus();
+            var mbox_button = document.querySelector('.mbox-wrapper .mbox-ok-button');
+            mbox_button.focus();
         },
 
         close: function () {
-            // hide the box
+            var modal_element = document.querySelector('.modal');
+            var modal_instance = M.Modal.getInstance(modal_element);
+            modal_instance.close();
+            //If .destroy() is called the modal doesn't fade out using the outDuration
+            //modal_instance.destroy();
+            modal_element.remove();
+            
             var close_speed = core.options.close_speed;
-            $('.mbox')
-                .fadeOut(close_speed, function () {
-                    $(this).closest('.mbox-wrapper').remove();
-                });
-
             // allow scrolling on body again
-            $('body').removeClass('mbox-open');
+            //$('body').removeClass('mbox-open');
 
             // unbind all the mbox buttons
+            //Do we have to do that?
+
             $('.mbox-button').unbind('click');
         },
 
