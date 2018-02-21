@@ -121,17 +121,19 @@ var mbox = (function ($) {
 
             var message = data.message;
             var cb = data.cb;
-
+            if (!cb) {
+                throw new Error('Confirm requires a callback');
+            }
             core.open('confirm', message);
 
             $('.mbox-wrapper .mbox-ok-button').click(function () {
                 core.close();
-                cb && cb(true);
+                cb(true);
             });
 
             $('.mbox-wrapper .mbox-cancel-button').click(function () {
                 core.close();
-                cb && cb(false);
+                cb(false);
             });
         },
 
@@ -142,19 +144,21 @@ var mbox = (function ($) {
 
             var message = data.message;
             var cb = data.cb;
-
+            if (!cb) {
+                throw new Error('Prompt requires a callback');
+            }
             core.open('prompt', message);
 
             $('.mbox-wrapper .mbox-ok-button').click(function () {
                 var entered_text = $('.mbox-wrapper input').val();
 
                 core.close();
-                cb && cb(entered_text);
+                cb(entered_text);
             });
 
             $('.mbox-wrapper .mbox-cancel-button').click(function () {
                 core.close();
-                cb && cb(false);
+                cb(false);
             });
         },
 
@@ -199,7 +203,8 @@ var mbox = (function ($) {
             configuration.buttons.forEach(function (button, i) {
                 var serialized_button = 'mbox-custom-button-' + i;
 
-                $('.' + serialized_button).click(function () {
+                $("body").on("click", '.' + serialized_button ,function () {
+                    console.log('clicked on serialized button')
                     if (button.callback) {
                         button.callback();
                     } else {
@@ -210,6 +215,13 @@ var mbox = (function ($) {
             });
             var template_element = document.createElement('div');
             template_element.innerHTML = template;
+            var options = core.options;
+            if (options.bottom_sheet) {
+                template_element.firstChild.classList.add("bottom-sheet");
+            }
+            if (options.fixed_footer) {
+                template_element.firstChild.classList.add("fixed-footer");
+            }
             document.body.append(template_element);
             var modal_element = document.querySelector('.modal');
             var options = core.options;
