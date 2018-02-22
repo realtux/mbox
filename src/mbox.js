@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 
 
-var mbox = (function ($) {
+var mbox = (function () {
     var locales = {
         en: {
             CANCEL: 'Cancel',
@@ -56,7 +56,9 @@ var mbox = (function ($) {
                 open_speed: 0,
                 close_speed: 0,
                 locale: 'en',
-                dismissible: false
+                dismissible: false,
+                bottom_sheet: false,
+                fixed_footer:false
             }
         },
 
@@ -107,8 +109,9 @@ var mbox = (function ($) {
             var cb = data.cb;
 
             core.open('alert', message);
-
-            $('.mbox-wrapper .mbox-ok-button').click(function () {
+            
+            var mbox_ok_button = document.querySelector('.mbox-wrapper .mbox-ok-button');
+            mbox_ok_button.addEventListener("click", function () {
                 core.close();
                 cb && cb();
             });
@@ -116,22 +119,20 @@ var mbox = (function ($) {
 
         confirm: function () {
             core.reset_options();
-
             var data = core.parse_args(arguments);
-
             var message = data.message;
             var cb = data.cb;
             if (!cb) {
                 throw new Error('Confirm requires a callback');
             }
             core.open('confirm', message);
-
-            $('.mbox-wrapper .mbox-ok-button').click(function () {
+            var mbox_ok_button = document.querySelector('.mbox-wrapper .mbox-ok-button');
+            var mbox_cancel_button = document.querySelector('.mbox-wrapper .mbox-cancel-button');
+            mbox_ok_button.addEventListener("click", function () {
                 core.close();
                 cb(true);
             });
-
-            $('.mbox-wrapper .mbox-cancel-button').click(function () {
+            mbox_cancel_button.addEventListener("click", function () {
                 core.close();
                 cb(false);
             });
@@ -149,14 +150,20 @@ var mbox = (function ($) {
             }
             core.open('prompt', message);
 
-            $('.mbox-wrapper .mbox-ok-button').click(function () {
-                var entered_text = $('.mbox-wrapper input').val();
+            var mbox_ok_button = document.querySelector('.mbox-wrapper .mbox-ok-button');
+            var mbox_cancel_button = document.querySelector('.mbox-wrapper .mbox-cancel-button');
 
+            //@TODO
+            //Find a way to add a common handler to both OK and Cancel buttons
+
+            mbox_ok_button.addEventListener('click', function () {
+                var input = document.querySelector('.mbox-wrapper input');
+                var entered_text = input.value;
                 core.close();
                 cb(entered_text);
             });
 
-            $('.mbox-wrapper .mbox-cancel-button').click(function () {
+            mbox_cancel_button.addEventListener('click', function () {
                 core.close();
                 cb(false);
             });
@@ -180,6 +187,10 @@ var mbox = (function ($) {
 
             var buttons = '';
 
+            //@TODO
+            //There are 2 loops for configuration.buttons
+            //Merge them into one
+
             configuration.buttons.forEach(function (button, i) {
                 var serialized_button = 'mbox-custom-button-' + i;
 
@@ -193,29 +204,29 @@ var mbox = (function ($) {
 
             template = template.replace(/\$\$\$_message_\$\$\$/gi, configuration.message || '');
             template = template.replace(/\$\$\$_buttons_\$\$\$/gi, buttons);
-
-            // prevent scrolling on the body
-            /* $('body')
-                .append(template)
-                .addClass('mbox-open') */;
-                
+               
             var open_speed = core.options.open_speed;
             configuration.buttons.forEach(function (button, i) {
                 var serialized_button = 'mbox-custom-button-' + i;
-
-                $("body").on("click", '.' + serialized_button ,function () {
-                    console.log('clicked on serialized button')
-                    if (button.callback) {
-                        button.callback();
-                    } else {
-                        core.close();
+                //Event delegation
+                document.body.addEventListener('click', function (e) {
+                    //classList is a DOMTokenList
+                    var classList = e.target.classList;
+                    if (classList.contains(serialized_button)) {
+                        var callback = button.callback;
+                        var has_callback = callback && typeof callback == 'function';
+                        if (has_callback) {
+                            callback();
+                        } else {
+                            core.close();
+                        }
                     }
                 });
 
             });
             var template_element = document.createElement('div');
             template_element.innerHTML = template;
-            var options = core.options;
+            var options = core.options || core.global.options;
             if (options.bottom_sheet) {
                 template_element.firstChild.classList.add("bottom-sheet");
             }
@@ -225,13 +236,20 @@ var mbox = (function ($) {
             document.body.append(template_element);
             var modal_element = document.querySelector('.modal');
             var options = core.options;
-            var modal_instance = M.Modal.init(modal_element, {
-                inDuration: options.open_speed,
-                outDuration: options.close_speed
-            });
+            var modal_options = {
+                opacity:options.opacity,
+                inDuration: options.open_speed || options.inDuration,
+                outDuration: options.close_speed || options.outDuration,
+                onOpenStart: options.onOpenStart,
+                onOpenEnd: options.onOpenEnd,
+                onCloseStart: options.onCloseStart,
+                onCloseEnd: options.onCloseEnd,
+                dismissible: options.dismissible,
+                startingTop: options.startingTop,
+                startingEnd:options.startingEnd
+            };
+            var modal_instance = M.Modal.init(modal_element, modal_options);
             modal_instance.open();
-            // show the box
-            /* $('.mbox-wrapper').fadeIn(open_speed); */
         },
 
         open: function (type, message) {
@@ -246,7 +264,6 @@ var mbox = (function ($) {
                 locale_name = core.global.options.locale;
             }
             var locale = locales[locale_name];
-            console.log(locale)
             switch (type) {
                 case 'alert':
                     buttons = core.gen_button('light-blue darken-2', locale.OK, 'mbox-ok-button');
@@ -268,11 +285,10 @@ var mbox = (function ($) {
 
             if (message) template = template.replace(/\$\$\$_message_\$\$\$/gi, message);
             if (buttons) template = template.replace(/\$\$\$_buttons_\$\$\$/gi, buttons);
-
-            
+        
             var template_element = document.createElement('div');
             template_element.innerHTML = template;
-            var options = core.options;
+            var options = core.options || core.global.options
             if (options.bottom_sheet) {
                 template_element.firstChild.classList.add("bottom-sheet");
             }
@@ -282,11 +298,20 @@ var mbox = (function ($) {
             document.body.append(template_element);
             //Since materializecss@1.0.0 we need to manually initialize modals
             var modal_element = document.querySelector('.modal');
-            var modal_instance = M.Modal.init(modal_element, {
-                inDuration: options.open_speed,
-                outDuration: options.close_speed,
-                dismissible:options.dismissable || core.global.options.dismissable
-            });
+            var modal_options = {
+                opacity: options.opacity || 0.5 ,
+                inDuration: options.open_speed || options.inDuration || 250,
+                outDuration: options.close_speed || options.outDuration || 250,
+                onOpenStart: options.onOpenStart,
+                onOpenEnd: options.onOpenEnd,
+                onCloseStart: options.onCloseStart,
+                onCloseEnd: options.onCloseEnd,
+                dismissible: options.dismissible,
+                startingTop: options.startingTop,
+                startingEnd: options.startingEnd
+            };
+            console.log(options)
+            var modal_instance = M.Modal.init(modal_element, modal_options);
             // show the box
             modal_instance.open();
             // focus the button
@@ -296,20 +321,17 @@ var mbox = (function ($) {
 
         close: function () {
             var modal_element = document.querySelector('.modal');
+            //Sometimes modal_instance might be null
+            //so check before closing
             var modal_instance = M.Modal.getInstance(modal_element);
-            modal_instance.close();
-            //If .destroy() is called the modal doesn't fade out using the outDuration
-            //modal_instance.destroy();
+            modal_instance && modal_instance.close();
             modal_element.remove();
-            
-            var close_speed = core.options.close_speed;
-            // allow scrolling on body again
-            //$('body').removeClass('mbox-open');
-
             // unbind all the mbox buttons
             //Do we have to do that?
-
-            $('.mbox-button').unbind('click');
+            var mbox_buttons = document.querySelectorAll('.mbox-button');
+            /* mbox_buttons.forEach(function (btn) {
+                btn.removeEventListener("click"); 
+            }); */
         },
 
         parse_args: function (args) {
@@ -356,4 +378,4 @@ var mbox = (function ($) {
         set_open_speed: core.set_open_speed,
         set_close_speed:core.set_close_speed
     }
-})(jQuery);
+})();
