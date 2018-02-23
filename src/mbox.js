@@ -53,8 +53,8 @@ var mbox = (function () {
 
         global: {
             options: {
-                open_speed: 0,
-                close_speed: 0,
+                open_speed: 250,
+                close_speed: 250,
                 locale: 'en',
                 dismissible: false,
                 bottom_sheet: false,
