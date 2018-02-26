@@ -58,7 +58,10 @@ var mbox = (function () {
                 locale: 'en',
                 dismissible: false,
                 bottom_sheet: false,
-                fixed_footer:false
+                fixed_footer: false,
+                opacity: 0.5,
+                startingTop: '4%',
+                startingEnd:'10%'
             }
         },
 
@@ -76,18 +79,19 @@ var mbox = (function () {
                 throw new Error("Speed value must be a number but a " + typeof (speed) + " was given");
             }
             core.global.options.open_speed = speed;
-        },
+        }, 
         template:
             '<div class="modal mbox-wrapper">' +
-                '<div class="z-depth-1">' +
-                    '<div class="modal-content">' +
-                        '<h5>$$$_message_$$$</h5>' + 
-                        '$$$_input_$$$' +
-                    '<div class="modal-footer">' + 
-                        '$$$_buttons_$$$'+
-                    '</div>'+ 
-                '</div>' 
-            +'</div>',    
+                '<div class="modal-content">' +
+                    '<h5>$$$_message_$$$</h5>' +
+                    '$$$_input_$$$' +
+                '</div>'+
+                '<div class="modal-footer">' +
+                    '$$$_buttons_$$$'+
+                '</div>'+
+            '</div>',
+        
+        
         set_locale: function (locale) {
             core.global.options.locale = locale;
         },
@@ -237,16 +241,16 @@ var mbox = (function () {
             var modal_element = document.querySelector('.modal');
             var options = core.options;
             var modal_options = {
-                opacity:options.opacity,
-                inDuration: options.open_speed || options.inDuration,
-                outDuration: options.close_speed || options.outDuration,
+                opacity: options.opacity || core.global.options.opacity,
+                inDuration: options.inDuration || options.open_speed || core.global.options.open_speed,
+                outDuration: options.outDuration || options.close_speed || core.global.options.close_speed,
                 onOpenStart: options.onOpenStart,
                 onOpenEnd: options.onOpenEnd,
                 onCloseStart: options.onCloseStart,
                 onCloseEnd: options.onCloseEnd,
-                dismissible: options.dismissible,
-                startingTop: options.startingTop,
-                startingEnd:options.startingEnd
+                dismissible: options.dismissible || core.global.options.dismissible,
+                startingTop: options.startingTop || core.global.options.startingTop,
+                startingEnd: options.startingEnd || core.global.options.startingEnd
             };
             var modal_instance = M.Modal.init(modal_element, modal_options);
             modal_instance.open();
@@ -288,7 +292,8 @@ var mbox = (function () {
         
             var template_element = document.createElement('div');
             template_element.innerHTML = template;
-            var options = core.options || core.global.options
+            var options = core.options || core.global.options;
+            
             if (options.bottom_sheet) {
                 template_element.firstChild.classList.add("bottom-sheet");
             }
@@ -299,18 +304,18 @@ var mbox = (function () {
             //Since materializecss@1.0.0 we need to manually initialize modals
             var modal_element = document.querySelector('.modal');
             var modal_options = {
-                opacity: options.opacity || 0.5 ,
-                inDuration: options.open_speed || options.inDuration || 250,
-                outDuration: options.close_speed || options.outDuration || 250,
+                opacity: options.opacity || core.global.options.opacity,
+                inDuration: options.inDuration || options.open_speed || core.global.options.open_speed,
+                outDuration: options.outDuration || options.close_speed || core.global.options.close_speed,
                 onOpenStart: options.onOpenStart,
                 onOpenEnd: options.onOpenEnd,
                 onCloseStart: options.onCloseStart,
                 onCloseEnd: options.onCloseEnd,
-                dismissible: options.dismissible,
-                startingTop: options.startingTop,
-                startingEnd: options.startingEnd
+                dismissible: options.dismissible || core.global.options.dismissible,
+                startingTop: options.startingTop || core.global.options.startingTop,
+                startingEnd: options.startingEnd || core.global.options.startingEnd
             };
-            console.log(options)
+            console.log(modal_options)
             var modal_instance = M.Modal.init(modal_element, modal_options);
             // show the box
             modal_instance.open();
@@ -320,6 +325,7 @@ var mbox = (function () {
         },
 
         close: function () {
+            /* core.reset_options(); */
             var modal_element = document.querySelector('.modal');
             //Sometimes modal_instance might be null
             //so check before closing
