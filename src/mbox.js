@@ -45,20 +45,21 @@ var mbox = (function () {
             CANCEL: 'cancelar'
         }
     };
+    //Merge 2 objects into one
+    var merge_objects = function (a, b) {
+        var obj = {};
+        var a_keys = Object.keys(a);
+        var b_keys = Object.keys(b);
+        a_keys.forEach(function (key) {
+            obj[key] = a[key];
+        });
+        b_keys.forEach(function (key) {
+            obj[key] = b[key];
+        });
+        return obj;
+    };
     var core = {
-        //Merge 2 objects into one
-        merge_objects: function (a,b) {
-            var obj = {};
-            var a_keys = Object.keys(a);
-            var b_keys = Object.keys(b);
-            a_keys.forEach(function (key) {
-                obj[key] = a[key]; 
-            });
-            b_keys.forEach(function (key) {
-                obj[key] = b[key]; 
-            });
-            return obj;
-        },
+       
         global: {
             options: {
                 inDuration: 250,
@@ -237,29 +238,18 @@ var mbox = (function () {
 
             });
             var template_element = document.createElement('div');
+            template_element.id = 'mbox-template-wrapper';
             template_element.innerHTML = template;
             var options = core.options || core.global.options;
             if (options.bottom_sheet) {
                 template_element.firstChild.classList.add("bottom-sheet");
             }
             if (options.fixed_footer) {
-                template_element.firstChild.classList.add("fixed-footer");
+                template_element.firstChild.classList.add("modal-fixed-footer");
             }
             document.body.append(template_element);
             var modal_element = document.querySelector('.modal');
             var options = core.options;
-            /* var modal_options = {
-                opacity: options.opacity || core.global.options.opacity,
-                inDuration: options.inDuration || options.open_speed || core.global.options.open_speed,
-                outDuration: options.outDuration || options.close_speed || core.global.options.close_speed,
-                onOpenStart: options.onOpenStart,
-                onOpenEnd: options.onOpenEnd,
-                onCloseStart: options.onCloseStart,
-                onCloseEnd: options.onCloseEnd,
-                dismissible: options.dismissible || core.global.options.dismissible,
-                startingTop: options.startingTop || core.global.options.startingTop,
-                startingEnd: options.startingEnd || core.global.options.startingEnd
-            } */;
             var modal_options = merge_objects(core.global.options, options);
             var modal_instance = M.Modal.init(modal_element, modal_options);
             modal_instance.open();
@@ -302,30 +292,21 @@ var mbox = (function () {
             if (buttons) template = template.replace(/\$\$\$_buttons_\$\$\$/gi, buttons);
         
             var template_element = document.createElement('div');
+            
             template_element.innerHTML = template;
+
+            template_element.id = 'mbox-template-wrapper';
             var options = core.options || core.global.options;
             
             if (options.bottom_sheet) {
                 template_element.firstChild.classList.add("bottom-sheet");
             }
             if (options.fixed_footer) {
-                template_element.firstChild.classList.add("fixed-footer");
+                template_element.firstChild.classList.add("modal-fixed-footer");
             }
             document.body.append(template_element);
             //Since materializecss@1.0.0 we need to manually initialize modals
             var modal_element = document.querySelector('.modal');
-            /* var modal_options = {
-                opacity: options.opacity || core.global.options.opacity,
-                inDuration: options.inDuration || options.open_speed || core.global.options.open_speed,
-                outDuration: options.outDuration || options.close_speed || core.global.options.close_speed,
-                onOpenStart: options.onOpenStart,
-                onOpenEnd: options.onOpenEnd,
-                onCloseStart: options.onCloseStart,
-                onCloseEnd: options.onCloseEnd,
-                dismissible: options.dismissible || core.global.options.dismissible,
-                startingTop: options.startingTop || core.global.options.startingTop,
-                startingEnd: options.startingEnd || core.global.options.startingEnd
-            }; */ 
             //@TODO
             //Maybe rename it to passed_options or local_options
             var options = core.options;
@@ -347,7 +328,8 @@ var mbox = (function () {
             //so check before closing
             var modal_instance = M.Modal.getInstance(modal_element);
             modal_instance && modal_instance.close();
-            modal_element.remove();
+            console.log(modal_element)
+            modal_element.parentElement.remove();
             // unbind all the mbox buttons
             //Do we have to do that?
             var mbox_buttons = document.querySelectorAll('.mbox-button');
@@ -397,7 +379,7 @@ var mbox = (function () {
         add_locale: core.add_locale,
         set_locale: core.set_locale,
         close: core.close,
-        set_open_speed: core.set_open_speed,
-        set_close_speed:core.set_close_speed
+        set_in_duration: core.set_in_duration,
+        set_out_duration:core.set_out_duration
     }
 })();
