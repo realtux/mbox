@@ -22,9 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  ***/
 
-
-
-
 var mbox = (function () {
     var locales = {
         en: {
@@ -49,12 +46,23 @@ var mbox = (function () {
         }
     };
     var core = {
-        
-
+        //Merge 2 objects into one
+        merge_objects: function (a,b) {
+            var obj = {};
+            var a_keys = Object.keys(a);
+            var b_keys = Object.keys(b);
+            a_keys.forEach(function (key) {
+                obj[key] = a[key]; 
+            });
+            b_keys.forEach(function (key) {
+                obj[key] = b[key]; 
+            });
+            return obj;
+        },
         global: {
             options: {
-                open_speed: 250,
-                close_speed: 250,
+                inDuration: 250,
+                outDuration: 250,
                 locale: 'en',
                 dismissible: false,
                 bottom_sheet: false,
@@ -68,17 +76,17 @@ var mbox = (function () {
         options: {
 
         },
-        set_close_speed: function (speed) {
+        set_out_duration: function (speed) {
             if (isNaN(speed)) {
                 throw new Error("Speed value must be a number but a " + typeof (speed) + " was given");
             }
-            core.global.options.close_speed = speed;
+            core.global.options.outDuration = speed;
         },
-        set_open_speed: function (speed) {
+        set_in_duration: function (speed) {
             if (isNaN(speed)) {
                 throw new Error("Speed value must be a number but a " + typeof (speed) + " was given");
             }
-            core.global.options.open_speed = speed;
+            core.global.options.inDuration = speed;
         }, 
         template:
             '<div class="modal mbox-wrapper">' +
@@ -240,7 +248,7 @@ var mbox = (function () {
             document.body.append(template_element);
             var modal_element = document.querySelector('.modal');
             var options = core.options;
-            var modal_options = {
+            /* var modal_options = {
                 opacity: options.opacity || core.global.options.opacity,
                 inDuration: options.inDuration || options.open_speed || core.global.options.open_speed,
                 outDuration: options.outDuration || options.close_speed || core.global.options.close_speed,
@@ -251,12 +259,15 @@ var mbox = (function () {
                 dismissible: options.dismissible || core.global.options.dismissible,
                 startingTop: options.startingTop || core.global.options.startingTop,
                 startingEnd: options.startingEnd || core.global.options.startingEnd
-            };
+            } */;
+            var modal_options = merge_objects(core.global.options, options);
             var modal_instance = M.Modal.init(modal_element, modal_options);
             modal_instance.open();
         },
 
         open: function (type, message) {
+            console.log('global options')
+            console.log(core.global.options)
             var template = core.template;
             var input = '<input type="text" />';
             var buttons;
@@ -303,7 +314,7 @@ var mbox = (function () {
             document.body.append(template_element);
             //Since materializecss@1.0.0 we need to manually initialize modals
             var modal_element = document.querySelector('.modal');
-            var modal_options = {
+            /* var modal_options = {
                 opacity: options.opacity || core.global.options.opacity,
                 inDuration: options.inDuration || options.open_speed || core.global.options.open_speed,
                 outDuration: options.outDuration || options.close_speed || core.global.options.close_speed,
@@ -314,7 +325,12 @@ var mbox = (function () {
                 dismissible: options.dismissible || core.global.options.dismissible,
                 startingTop: options.startingTop || core.global.options.startingTop,
                 startingEnd: options.startingEnd || core.global.options.startingEnd
-            };
+            }; */ 
+            //@TODO
+            //Maybe rename it to passed_options or local_options
+            var options = core.options;
+            var modal_options = merge_objects(core.global.options, options);
+            //need to check if apart from close or open speed in/outDuration options were passed
             console.log(modal_options)
             var modal_instance = M.Modal.init(modal_element, modal_options);
             // show the box
