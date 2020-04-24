@@ -15,7 +15,6 @@ Mbox is not a DOM terrorist. Whatever windows and wrappers it creates, it remove
 
 #### Dependencies
 - [MaterializeCSS](https://github.com/dogfalo/materialize)
-- jQuery 1.7.2+
 
 ### Basic Usage
 
@@ -108,11 +107,17 @@ mbox.global.options.close_speed = 0; // how fast the modal closes in millisecond
 # For versions >= 0.0.5
 
 From version >=0.0.5 `mbox` uses the revealing module pattern so in order
-to set global `close_speed` and `open_speed` you need to use the following methods:
+to set global options you need to use the following methods:
 ```
 mbox.set_open_speed(speed);
-mbox.set_close_speed(speed); 
-(where speed is a number)
+mbox.set_close_speed(speed);
+mbox.set_bottom_sheet(bottom_sheet)
+mbox.set_dismissible(dismissible)
+mbox.set_fixed_footer(fixed_footer)
+mbox.set_opacity(opacity)
+mbox.set_starting_end(startingEnd)
+mbox.set_starting_top(startingTop)
+
 
 ```
 

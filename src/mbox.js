@@ -1,25 +1,25 @@
 /***
-The MIT License (MIT)
+ The MIT License (MIT)
 
-Copyright (c) 2015 Brian Seymour
+ Copyright (c) 2015 Brian Seymour
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
  ***/
 
 var mbox = (function () {
@@ -59,7 +59,7 @@ var mbox = (function () {
         return obj;
     };
     var core = {
-       
+
         global: {
             options: {
                 inDuration: 250,
@@ -70,13 +70,11 @@ var mbox = (function () {
                 fixed_footer: false,
                 opacity: 0.5,
                 startingTop: '4%',
-                startingEnd:'10%'
+                startingEnd: '10%'
             }
         },
 
-        options: {
-
-        },
+        options: {},
         set_out_duration: function (speed) {
             if (isNaN(speed)) {
                 throw new Error("Speed value must be a number but a " + typeof (speed) + " was given");
@@ -88,19 +86,40 @@ var mbox = (function () {
                 throw new Error("Speed value must be a number but a " + typeof (speed) + " was given");
             }
             core.global.options.inDuration = speed;
-        }, 
+        },
+        set_dismissible: function (dismissible) {
+            core.global.options.dismissible = !!dismissible;
+        },
+        set_bottom_sheet: function (bottom_sheet) {
+            core.global.options.bottom_sheet = bottom_sheet;
+        },
+        set_fixed_footer: function (fixed_footer) {
+            core.global.options.fixed_footer = fixed_footer;
+        },
+        set_opacity: function (opacity) {
+            if (opacity == void 0) {
+                throw new Error("You need to provide opacity");
+            }
+            core.global.options.opacity = opacity;
+        },
+        set_starting_top: function (starting_top) {
+            core.global.options.startingTop = starting_top;
+        },
+        set_starting_end: function (starting_end) {
+            core.global.options.startingEnd = starting_end;
+        },
         template:
             '<div class="modal mbox-wrapper">' +
-                '<div class="modal-content">' +
-                    '<h5>$$$_message_$$$</h5>' +
-                    '$$$_input_$$$' +
-                '</div>'+
-                '<div class="modal-footer">' +
-                    '$$$_buttons_$$$'+
-                '</div>'+
+            '<div class="modal-content">' +
+            '<h5>$$$_message_$$$</h5>' +
+            '$$$_input_$$$' +
+            '</div>' +
+            '<div class="modal-footer">' +
+            '$$$_buttons_$$$' +
+            '</div>' +
             '</div>',
-        
-        
+
+
         set_locale: function (locale) {
             core.global.options.locale = locale;
         },
@@ -122,7 +141,7 @@ var mbox = (function () {
             var cb = data.cb;
 
             core.open('alert', message);
-            
+
             var mbox_ok_button = document.querySelector('.mbox-wrapper .mbox-ok-button');
             mbox_ok_button.addEventListener("click", function () {
                 core.close();
@@ -217,7 +236,7 @@ var mbox = (function () {
 
             template = template.replace(/\$\$\$_message_\$\$\$/gi, configuration.message || '');
             template = template.replace(/\$\$\$_buttons_\$\$\$/gi, buttons);
-               
+
             var open_speed = core.options.open_speed;
             configuration.buttons.forEach(function (button, i) {
                 var serialized_button = 'mbox-custom-button-' + i;
@@ -290,14 +309,14 @@ var mbox = (function () {
 
             if (message) template = template.replace(/\$\$\$_message_\$\$\$/gi, message);
             if (buttons) template = template.replace(/\$\$\$_buttons_\$\$\$/gi, buttons);
-        
+
             var template_element = document.createElement('div');
-            
+
             template_element.innerHTML = template;
 
             template_element.id = 'mbox-template-wrapper';
             var options = core.options || core.global.options;
-            
+
             if (options.bottom_sheet) {
                 template_element.firstChild.classList.add("bottom-sheet");
             }
@@ -380,6 +399,12 @@ var mbox = (function () {
         set_locale: core.set_locale,
         close: core.close,
         set_in_duration: core.set_in_duration,
-        set_out_duration:core.set_out_duration
+        set_out_duration: core.set_out_duration,
+        set_bottom_sheet: core.set_bottom_sheet,
+        set_dismissible: core.set_dismissible,
+        set_fixed_footer: core.set_fixed_footer,
+        set_opacity: core.set_opacity,
+        set_starting_end: core.set_starting_end,
+        set_starting_top: core.set_starting_top
     }
 })();
